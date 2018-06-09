@@ -4,5 +4,33 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	<!-- Root Context: defines shared resources visible to all other web components -->
+   <!-- service, DB, DAO context를 설정 -->
+   
+   <!-- <context:component-scan base-package="org.signt.model, org.signt.service" /> -->
+   
+      
+   <!-- MyBatis(Maria DB)와 Spring 연결 -->
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+      <property name="driverClass" value="org.mariadb.jdbc.Driver" />
+      <property name="url" value="jdbc:mariadb://52.42.164.89:3306/study" />
+      <property name="username" value="study" />
+      <property name="password" value="study" />
+   </bean>
+   <!-- MyBatis(Maria DB)와 Spring 연결 -->
+   
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="dataSource" ref="dataSource"></property>
+      <property name="mapperLocations" value="classpath*:sql/maria/**/*Mapper.xml" />
+      <!-- <property name="configLocation" value="classpath:/classpath:sql/config/maria-config.xml"></property> -->
+   </bean>
+   
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+   </bean>
+      
+   <!-- transaction -->
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="dataSource"></property>
+   </bean>	
 </beans>

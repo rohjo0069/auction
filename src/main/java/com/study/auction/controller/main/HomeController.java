@@ -1,4 +1,4 @@
-package com.study.auction;
+package com.study.auction.controller.main;
 
 import java.text.DateFormat;
 import java.util.Date;
